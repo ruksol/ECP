@@ -2,7 +2,7 @@ const IndustryNews = require('../models/IndustryNews');
 
 exports.getAllNews = async (req, res) => {
   try {
-    const news = await IndustryNews.find().populate('author', 'name');
+    const news = await IndustryNews.find();
     res.json(news);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -11,7 +11,7 @@ exports.getAllNews = async (req, res) => {
 
 exports.getNewsById = async (req, res) => {
   try {
-    const news = await IndustryNews.findById(req.params.id).populate('author', 'name');
+    const news = await IndustryNews.findById(req.params.id);
     if (!news) {
       return res.status(404).json({ message: 'News article not found' });
     }
@@ -26,7 +26,7 @@ exports.createNews = async (req, res) => {
     title: req.body.title,
     content: req.body.content,
     category: req.body.category,
-    author: req.user.id, // Assuming you have authentication middleware that sets req.user
+    author: req.body.author,
     publishedAt: new Date(),
   });
 
@@ -48,6 +48,7 @@ exports.updateNews = async (req, res) => {
     news.title = req.body.title || news.title;
     news.content = req.body.content || news.content;
     news.category = req.body.category || news.category;
+    news.author = req.body.author || news.author;
     news.updatedAt = Date.now();
 
     const updatedNews = await news.save();
@@ -57,18 +58,6 @@ exports.updateNews = async (req, res) => {
   }
 };
 
-// exports.deleteNews = async (req, res) => {
-//   try {
-//     const news = await IndustryNews.findById(req.params.id);
-//     if (!news) {
-//       return res.status(404).json({ message: 'News article not found' });
-//     }
-//     await news.remove();
-//     res.json({ message: 'News article deleted' });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 exports.deleteNews = async (req, res) => {
   try {
     const result = await IndustryNews.deleteOne({ _id: req.params.id });

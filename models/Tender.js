@@ -7,7 +7,7 @@ const tenderSchema = new mongoose.Schema({
   deadline: { type: Date, required: true },
   budget: { type: Number, required: true },
   status: { type: String, required: true, enum: ['Open', 'Closed', 'Awarded'] },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  createdBy: { type: String, required: true, index: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

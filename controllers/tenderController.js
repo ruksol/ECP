@@ -29,7 +29,7 @@ exports.createTender = async (req, res) => {
     deadline: req.body.deadline,
     budget: req.body.budget,
     status: 'Open',
-    createdBy: req.user.id, // Assuming you have authentication middleware that sets req.user
+    createdBy: req.body.createdBy, // Get createdBy from request body
   });
 
   try {
@@ -53,6 +53,7 @@ exports.updateTender = async (req, res) => {
     tender.deadline = req.body.deadline || tender.deadline;
     tender.budget = req.body.budget || tender.budget;
     tender.status = req.body.status || tender.status;
+    tender.createdBy = req.body.createdBy || tender.createdBy; // Update createdBy from request body
     tender.updatedAt = Date.now();
 
     const updatedTender = await tender.save();
@@ -62,18 +63,6 @@ exports.updateTender = async (req, res) => {
   }
 };
 
-// exports.deleteTender = async (req, res) => {
-//   try {
-//     const tender = await Tender.findById(req.params.id);
-//     if (!tender) {
-//       return res.status(404).json({ message: 'Tender not found' });
-//     }
-//     await tender.remove();
-//     res.json({ message: 'Tender deleted' });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 exports.deleteTender = async (req, res) => {
   try {
     const result = await Tender.deleteOne({ _id: req.params.id });

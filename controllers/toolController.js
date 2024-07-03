@@ -27,7 +27,7 @@ exports.createTool = async (req, res) => {
     description: req.body.description,
     category: req.body.category,
     price: req.body.price,
-    supplier: req.body.supplierId,
+    supplier: req.body.supplier,
   });
 
   try {
@@ -49,7 +49,7 @@ exports.updateTool = async (req, res) => {
     tool.description = req.body.description || tool.description;
     tool.category = req.body.category || tool.category;
     tool.price = req.body.price || tool.price;
-    tool.supplier = req.body.supplierId || tool.supplier;
+    tool.supplier = req.body.supplier || tool.supplier;
     tool.updatedAt = Date.now();
 
     const updatedTool = await tool.save();
@@ -59,18 +59,6 @@ exports.updateTool = async (req, res) => {
   }
 };
 
-// exports.deleteTool = async (req, res) => {
-//   try {
-//     const tool = await Tool.findById(req.params.id);
-//     if (!tool) {
-//       return res.status(404).json({ message: 'Tool not found' });
-//     }
-//     await tool.remove();
-//     res.json({ message: 'Tool deleted' });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 exports.deleteTool = async (req, res) => {
   try {
     const result = await Tool.deleteOne({ _id: req.params.id });
