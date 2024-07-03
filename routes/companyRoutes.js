@@ -16,7 +16,7 @@ router.get('/:id', companyController.getCompanyById);
 router.post('/', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), companyController.createCompany);
 
 // Update a company (accessible to users with 'admin' or 'manager' role)
-router.patch('/:id', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), companyController.updateCompany);
+router.put('/:id', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), companyController.updateCompany);
 
 // Delete a company (accessible to users with 'admin' role)
 router.delete('/:id', rbacMiddleware([ROLES.ADMIN]), companyController.deleteCompany);

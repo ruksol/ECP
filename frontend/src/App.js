@@ -8,6 +8,7 @@ import Tenders from './pages/Tenders';
 import Tools from './pages/Tools';
 import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
+import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/tools" element={<Tools />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/dashboard/*" element={<AdminPage />} />
       </Routes>
     </Router>
   );
