@@ -17,7 +17,7 @@ router.get('/:id', toolController.getToolById);
 router.post('/', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), toolController.createTool);
 
 // Update a tool (accessible to users with 'admin' or 'manager' role)
-router.patch('/:id', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), toolController.updateTool);
+router.put('/:id', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), toolController.updateTool);
 
 // Delete a tool (accessible to users with 'admin' role)
 router.delete('/:id', rbacMiddleware([ROLES.ADMIN]), toolController.deleteTool);

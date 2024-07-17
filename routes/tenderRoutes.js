@@ -17,7 +17,7 @@ router.get('/:id', tenderController.getTenderById);
 router.post('/', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), tenderController.createTender);
 
 // Update a tender (accessible to users with 'admin' or 'manager' role)
-router.patch('/:id', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), tenderController.updateTender);
+router.put('/:id', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), tenderController.updateTender);
 
 // Delete a tender (accessible to users with 'admin' role)
 router.delete('/:id', rbacMiddleware([ROLES.ADMIN]), tenderController.deleteTender);

@@ -2,14 +2,15 @@
 import React from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import CompaniesAdmin from '../components/CompaniesAdmin';
-// import NewsAdmin from './NewsAdmin';
-// import TendersAdmin from './TendersAdmin';
-// import ToolsAdmin from './ToolsAdmin';
-// import UsersAdmin from './UsersAdmin';
+import NewsAdmin from '../components/NewsAdmin';
+import TendersAdmin from '../components/TendersAdmin';
+import ToolsAdmin from '../components/ToolsAdmin';
+import UsersAdmin from '../components/UsersAdmin';
 
 const AdminPage = () => {
   return (
     <div className="admin-page">
+      <h1>Admin Page</h1>
       <aside className="sidebar">
         <nav>
           <ul>
@@ -24,10 +25,10 @@ const AdminPage = () => {
       <main className="admin-content">
         <Routes>
           <Route path="companies" element={<CompaniesAdmin />} />
-          {/* <Route path="news" element={<NewsAdmin />} />
+          <Route path="news" element={<NewsAdmin />} />
           <Route path="tenders" element={<TendersAdmin />} />
           <Route path="tools" element={<ToolsAdmin />} />
-          <Route path="users" element={<UsersAdmin />} /> */}
+          <Route path="users" element={<UsersAdmin />} />
         </Routes>
       </main>
     </div>

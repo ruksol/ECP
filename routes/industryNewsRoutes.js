@@ -17,7 +17,7 @@ router.get('/:id', industryNewsController.getNewsById);
 router.post('/', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), industryNewsController.createNews);
 
 // Update a news (accessible to users with 'admin' or 'manager' role)
-router.patch('/:id', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), industryNewsController.updateNews);
+router.put('/:id', rbacMiddleware([ROLES.ADMIN, ROLES.MANAGER]), industryNewsController.updateNews);
 
 // Delete a news (accessible to users with 'admin' role)
 router.delete('/:id', rbacMiddleware([ROLES.ADMIN]), industryNewsController.deleteNews);
