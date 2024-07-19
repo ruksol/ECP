@@ -1,126 +1,10 @@
-// // pages/Login.js
-// import React, { useState } from 'react';
-// import axios from 'axios';
-
-// function Login() {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       const response = await axios.post('/api/login', {
-//         username,
-//         password,
-//       });
-
-//       // Store the token in local storage or session storage
-//       localStorage.setItem('token', response.data.token);
-
-//       // Redirect the user to the desired page (e.g., the dashboard)
-//       window.location.href = '/home';
-//     } catch (error) {
-//       console.error('Error logging in:', error);
-//       // Display an error message to the user
-//       alert('Invalid username or password');
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h1>Login</h1>
-//       <form onSubmit={handleSubmit}>
-//         <label>
-//           Username:
-//           <input
-//             type="text"
-//             value={username}
-//             onChange={(e) => setUsername(e.target.value)}
-//           />
-//         </label>
-//         <label>
-//           Password:
-//           <input
-//             type="password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//           />
-//         </label>
-//         <button type="submit">Login</button>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default Login;
-
-// // pages/Login.js
-// import React, { useState } from 'react';
-// import axios from 'axios';
-
-// function Login() {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       const response = await axios.post('/api/login', {
-//         username,
-//         password,
-//       });
-
-//       // Store the token and role in local storage or session storage
-//       localStorage.setItem('token', response.data.token);
-//       localStorage.setItem('role', response.data.role);
-
-//       // Redirect the user based on their role
-//       if (response.data.role === 'admin') {
-//         window.location.href = '/dashboard';
-//       } else {
-//         window.location.href = '/home';
-//       }
-//     } catch (error) {
-//       console.error('Error logging in:', error);
-//       // Display an error message to the user
-//       alert('Invalid username or password');
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h1>Login</h1>
-//       <form onSubmit={handleSubmit}>
-//         <label>
-//           Username:
-//           <input
-//             type="text"
-//             value={username}
-//             onChange={(e) => setUsername(e.target.value)}
-//           />
-//         </label>
-//         <label>
-//           Password:
-//           <input
-//             type="password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//           />
-//         </label>
-//         <button type="submit">Login</button>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default Login;
-
 // pages/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { Link } from 'react-router-dom';
+
+import '../styles/Login.css'; // Import the CSS file
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -156,27 +40,32 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <div className="login-container">
+      <h1 className="login-header">Login</h1>
+      <form onSubmit={handleSubmit} className="login-form">
+        <label className="login-label">
           Username:
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className="login-input"
           />
         </label>
-        <label>
+        <label className="login-label">
           Password:
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="login-input"
           />
         </label>
-        <button type="submit">Login</button>
+        <button type="submit" className="login-button">Login</button>
       </form>
+      <p className="register-link">
+        Don't have an account? <Link to="/register" className="register-link-text">Register</Link>
+      </p>
     </div>
   );
 }

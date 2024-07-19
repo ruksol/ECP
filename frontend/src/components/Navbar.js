@@ -1,51 +1,13 @@
-// import React from 'react';
-// import { Link, useNavigate } from 'react-router-dom';
-
-// function Navbar() {
-//   const navigate = useNavigate();
-
-//   const handleLogout = () => {
-//     // Perform logout logic, e.g., clear token from local storage
-//     localStorage.removeItem('token');
-//     navigate('/login');
-//   };
-
-//   const isLoggedIn = !!localStorage.getItem('token');
-
-//   return (
-//     <nav>
-//       <ul>
-//         <li><Link to="/">Home</Link></li>
-//         <li><Link to="/companies">Companies</Link></li>
-//         <li><Link to="/news">Industry News</Link></li>
-//         <li><Link to="/tenders">Tenders</Link></li>
-//         <li><Link to="/tools">Tools</Link></li>
-//         {!isLoggedIn && (
-//           <>
-//             <li><Link to="/login">Login</Link></li>
-//             <li><Link to="/register">Register</Link></li>
-//           </>
-//         )}
-//         {isLoggedIn && (
-//           <li><button onClick={handleLogout}>Logout</button></li>
-//         )}
-//       </ul>
-//     </nav>
-//   );
-// }
-
-// export default Navbar;
-
+// Navbar.js
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-
+import '../styles/Navbar.css';
 
 function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Perform logout logic, e.g., clear token from local storage
     localStorage.removeItem('token');
     navigate('/login');
   };
@@ -60,25 +22,47 @@ function Navbar() {
   }
 
   return (
-    <nav>
-      <ul>
+    <nav className="navbar">
+      <ul className="navbar-list">
+        {!isAdmin && (
+          <li className="navbar-item">
+            <Link to="/" className="navbar-link">ECP</Link>
+          </li>
+        )}
+      </ul>
+      <ul className="navbar-list">
         {!isAdmin && (
           <>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/companies">Companies</Link></li>
-            <li><Link to="/news">Industry News</Link></li>
-            <li><Link to="/tenders">Tenders</Link></li>
-            <li><Link to="/tools">Tools</Link></li>
+            <li className="navbar-item">
+              <Link to="/companies" className="navbar-link">Companies</Link>
+            </li>
+            <li className="navbar-item">
+              <Link to="/news" className="navbar-link">Industry News</Link>
+            </li>
+            <li className="navbar-item">
+              <Link to="/tenders" className="navbar-link">Tenders</Link>
+            </li>
+            <li className="navbar-item">
+              <Link to="/tools" className="navbar-link">Tools</Link>
+            </li>
           </>
         )}
+      </ul>
+      <ul className="navbar-list">
         {!isLoggedIn && (
           <>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/register">Register</Link></li>
+            <li className="navbar-item">
+              <Link to="/login" className="navbar-link">Login</Link>
+            </li>
+            {/* <li className="navbar-item">
+              <Link to="/register" className="navbar-link">Register</Link>
+            </li> */}
           </>
         )}
         {isLoggedIn && (
-          <li><button onClick={handleLogout}>Logout</button></li>
+          <li className="navbar-item">
+            <button onClick={handleLogout} className="navbar-button">Logout</button>
+          </li>
         )}
       </ul>
     </nav>

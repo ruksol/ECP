@@ -10,6 +10,8 @@ import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
 import AdminPage from './pages/AdminPage';
 
+import './App.css';
+
 function App() {
   return (
     <Router>
