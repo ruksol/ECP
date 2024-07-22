@@ -1,6 +1,6 @@
-// NewsAdmin.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import FileBase64 from 'react-file-base64';
 
 const NewsAdmin = () => {
   const token = localStorage.getItem('token');
@@ -12,6 +12,7 @@ const NewsAdmin = () => {
     category: '',
     author: '',
     publishedAt: '',
+    image: '', // New field for image
   });
   const [editingNews, setEditingNews] = useState(null);
   const [updatedNews, setUpdatedNews] = useState({
@@ -20,6 +21,7 @@ const NewsAdmin = () => {
     category: '',
     author: '',
     publishedAt: '',
+    image: '', // New field for image
   });
 
   useEffect(() => {
@@ -49,6 +51,7 @@ const NewsAdmin = () => {
         category: '',
         author: '',
         publishedAt: '',
+        image: '', // Reset the image field
       });
     } catch (error) {
       console.error('Error adding news:', error);
@@ -95,6 +98,11 @@ const NewsAdmin = () => {
     }
   };
 
+  const handleImageUpload = (file) => {
+    setNewNewsItem({ ...newNewsItem, image: file.base64 });
+    setUpdatedNews((prev) => ({ ...prev, image: file.base64 }));
+  };
+
   return (
     <div className="news-admin">
       <h2>News</h2>
@@ -117,18 +125,14 @@ const NewsAdmin = () => {
           placeholder="Content"
           required
         />
-        <select
+        <input
+          type="text"
           name="category"
           value={newNewsItem.category}
           onChange={(e) => setNewNewsItem({ ...newNewsItem, category: e.target.value })}
+          placeholder="Category"
           required
-        >
-          <option value="">Select Category</option>
-          <option value="Construction">Construction</option>
-          <option value="Infrastructure">Infrastructure</option>
-          <option value="Real Estate">Real Estate</option>
-        </select>
-            
+        />
         <input
           type="text"
           name="author"
@@ -144,6 +148,10 @@ const NewsAdmin = () => {
           onChange={(e) => setNewNewsItem({ ...newNewsItem, publishedAt: e.target.value })}
           required
         />
+        <FileBase64
+          multiple={false}
+          onDone={handleImageUpload}
+        />
         <button type="submit">Add News</button>
       </form>
 
@@ -156,6 +164,7 @@ const NewsAdmin = () => {
             <th>Category</th>
             <th>Author</th>
             <th>Published At</th>
+            <th>Image</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -166,6 +175,7 @@ const NewsAdmin = () => {
               <td>{newsItem.category}</td>
               <td>{newsItem.author}</td>
               <td>{new Date(newsItem.publishedAt).toLocaleDateString()}</td>
+              <td>{newsItem.image && <img src={newsItem.image} alt={`${newsItem.name}`} style={{ width: '100px', height: '100px' }} />}</td>
               <td>
                 <button onClick={() => handleEdit(newsItem)}>Edit</button>
                 <button onClick={() => handleDeleteNews(newsItem._id)}>Delete</button>
@@ -197,17 +207,14 @@ const NewsAdmin = () => {
                 placeholder="Content"
                 required
               />
-              <select
+              <input
+                type="text"
                 name="category"
                 value={updatedNews.category}
                 onChange={handleInputChange}
+                placeholder="Category"
                 required
-              >
-                <option value="">Select Category</option>
-                <option value="Construction">Construction</option>
-                <option value="Infrastructure">Infrastructure</option>
-                <option value="Real Estate">Real Estate</option>
-              </select>
+              />
               <input
                 type="text"
                 name="author"
@@ -222,6 +229,10 @@ const NewsAdmin = () => {
                 value={updatedNews.publishedAt}
                 onChange={handleInputChange}
                 required
+              />
+              <FileBase64
+                multiple={false}
+                onDone={handleImageUpload}
               />
               <button type="submit">Save</button>
             </form>

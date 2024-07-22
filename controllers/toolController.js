@@ -1,3 +1,4 @@
+// toolController.js
 const Tool = require('../models/Tool');
 
 exports.getAllTools = async (req, res) => {
@@ -28,6 +29,7 @@ exports.createTool = async (req, res) => {
     category: req.body.category,
     price: req.body.price,
     supplier: req.body.supplier,
+    image: req.body.image, // Handle image data
   });
 
   try {
@@ -50,6 +52,7 @@ exports.updateTool = async (req, res) => {
     tool.category = req.body.category || tool.category;
     tool.price = req.body.price || tool.price;
     tool.supplier = req.body.supplier || tool.supplier;
+    tool.image = req.body.image || tool.image; // Handle image data
     tool.updatedAt = Date.now();
 
     const updatedTool = await tool.save();

@@ -1,6 +1,6 @@
-// CompaniesAdmin.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import FileBase64 from 'react-file-base64';
 
 const CompaniesAdmin = () => {
   const token = localStorage.getItem('token');
@@ -20,8 +20,9 @@ const CompaniesAdmin = () => {
     },
     website: '',
     category: '',
+    image: '', // Add image field
   });
-  const [editingCompany, setEditingCompany] = useState(null); // Track the company being edited
+  const [editingCompany, setEditingCompany] = useState(null);
   const [updatedCompany, setUpdatedCompany] = useState({
     name: '',
     description: '',
@@ -36,6 +37,7 @@ const CompaniesAdmin = () => {
     },
     website: '',
     category: '',
+    image: '', // Add image field
   });
 
   useEffect(() => {
@@ -73,6 +75,7 @@ const CompaniesAdmin = () => {
         },
         website: '',
         category: '',
+        image: '', // Reset image field
       });
     } catch (error) {
       console.error('Error adding company:', error);
@@ -128,6 +131,14 @@ const CompaniesAdmin = () => {
     } catch (error) {
       console.error('Error deleting company:', error);
     }
+  };
+
+  const handleImageUpload = (file) => {
+    setNewCompany({ ...newCompany, image: file.base64 });
+  };
+
+  const handleUpdatedImageUpload = (file) => {
+    setUpdatedCompany({ ...updatedCompany, image: file.base64 });
   };
 
   return (
@@ -223,6 +234,10 @@ const CompaniesAdmin = () => {
           onChange={(e) => setNewCompany({ ...newCompany, category: e.target.value })}
           placeholder="Category"
           required
+        />
+        <FileBase64
+          multiple={false}
+          onDone={handleImageUpload}
         />
         <button type="submit">Add Company</button>
       </form>
@@ -321,6 +336,10 @@ const CompaniesAdmin = () => {
                   placeholder="Category"
                   required
                 />
+                <FileBase64
+                  multiple={false}
+                  onDone={handleUpdatedImageUpload}
+                />
                 <button onClick={handleSave}>Save</button>
                 <button onClick={handleCancelEdit}>Cancel</button>
               </div>
@@ -335,6 +354,7 @@ const CompaniesAdmin = () => {
                 </p>
                 <p>Website: {company.website}</p>
                 <p>Category: {company.category}</p>
+                {company.image && <img src={company.image} alt={`${company.name}`} style={{ width: '100px', height: '100px' }} />}
                 <p>Created: {new Date(company.createdAt).toLocaleString()}</p>
                 <p>Updated: {new Date(company.updatedAt).toLocaleString()}</p>
                 <div>

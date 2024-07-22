@@ -14,6 +14,7 @@ const companySchema = new mongoose.Schema({
   },
   website: { type: String },
   category: { type: String, required: true },
+  image: { type: String }, // Add image field
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

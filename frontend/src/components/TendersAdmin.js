@@ -1,6 +1,6 @@
-// TendersAdmin.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import FileBase64 from 'react-file-base64';
 
 const TendersAdmin = () => {
   const token = localStorage.getItem('token');
@@ -14,6 +14,7 @@ const TendersAdmin = () => {
     budget: '',
     status: 'Open',
     createdBy: '',
+    image: '', // Add image field
   });
   const [editingTender, setEditingTender] = useState(null);
   const [updatedTender, setUpdatedTender] = useState({
@@ -24,6 +25,7 @@ const TendersAdmin = () => {
     budget: '',
     status: '',
     createdBy: '',
+    image: '', // Add image field
   });
 
   useEffect(() => {
@@ -55,6 +57,7 @@ const TendersAdmin = () => {
         budget: '',
         status: 'Open',
         createdBy: '',
+        image: '', // Reset image field
       });
     } catch (error) {
       console.error('Error adding tender:', error);
@@ -99,6 +102,14 @@ const TendersAdmin = () => {
     } catch (error) {
       console.error('Error deleting tender:', error);
     }
+  };
+
+  const handleNewImageUpload = (file) => {
+    setNewTender({ ...newTender, image: file.base64 });
+  };
+
+  const handleEditImageUpload = (file) => {
+    setUpdatedTender({ ...updatedTender, image: file.base64 });
   };
 
   return (
@@ -163,6 +174,10 @@ const TendersAdmin = () => {
           placeholder="Created By"
           required
         />
+        <FileBase64
+          multiple={false}
+          onDone={handleNewImageUpload} // Handle image upload
+        />
         <button type="submit">Add Tender</button>
       </form>
 
@@ -176,7 +191,8 @@ const TendersAdmin = () => {
             <th>Deadline</th>
             <th>Budget</th>
             <th>Status</th>
-            <th>createdBy</th>
+            <th>Created By</th>
+            <th>Image</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -189,6 +205,7 @@ const TendersAdmin = () => {
               <td>{tender.budget}</td>
               <td>{tender.status}</td>
               <td>{tender.createdBy}</td>
+              <td>{tender.image && <img src={tender.image} alt={`${tender.name}`} style={{ width: '100px', height: '100px' }} />}</td>
               <td>
                 <button onClick={() => handleEdit(tender)}>Edit</button>
                 <button onClick={() => handleDeleteTender(tender._id)}>Delete</button>
@@ -257,6 +274,10 @@ const TendersAdmin = () => {
               onChange={handleInputChange}
               placeholder="Created By"
               required
+            />
+            <FileBase64
+              multiple={false}
+              onDone={handleEditImageUpload} // Handle image upload
             />
             <button type="submit">Save</button>
             <button type="button" onClick={handleCancelEdit}>Cancel</button>

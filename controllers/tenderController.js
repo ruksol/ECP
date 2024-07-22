@@ -2,7 +2,7 @@ const Tender = require('../models/Tender');
 
 exports.getAllTenders = async (req, res) => {
   try {
-    const tenders = await Tender.find().populate('createdBy', 'name');
+    const tenders = await Tender.find();
     res.json(tenders);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -11,7 +11,7 @@ exports.getAllTenders = async (req, res) => {
 
 exports.getTenderById = async (req, res) => {
   try {
-    const tender = await Tender.findById(req.params.id).populate('createdBy', 'name');
+    const tender = await Tender.findById(req.params.id);
     if (!tender) {
       return res.status(404).json({ message: 'Tender not found' });
     }
@@ -29,7 +29,8 @@ exports.createTender = async (req, res) => {
     deadline: req.body.deadline,
     budget: req.body.budget,
     status: 'Open',
-    createdBy: req.body.createdBy, // Get createdBy from request body
+    createdBy: req.body.createdBy,
+    image: req.body.image, // Get image from request body
   });
 
   try {
@@ -53,7 +54,8 @@ exports.updateTender = async (req, res) => {
     tender.deadline = req.body.deadline || tender.deadline;
     tender.budget = req.body.budget || tender.budget;
     tender.status = req.body.status || tender.status;
-    tender.createdBy = req.body.createdBy || tender.createdBy; // Update createdBy from request body
+    tender.createdBy = req.body.createdBy || tender.createdBy;
+    tender.image = req.body.image || tender.image; // Update image from request body
     tender.updatedAt = Date.now();
 
     const updatedTender = await tender.save();

@@ -27,7 +27,8 @@ exports.createNews = async (req, res) => {
     content: req.body.content,
     category: req.body.category,
     author: req.body.author,
-    publishedAt: new Date(),
+    publishedAt: req.body.publishedAt || new Date(),
+    image: req.body.image, // Handle image field
   });
 
   try {
@@ -49,6 +50,8 @@ exports.updateNews = async (req, res) => {
     news.content = req.body.content || news.content;
     news.category = req.body.category || news.category;
     news.author = req.body.author || news.author;
+    news.publishedAt = req.body.publishedAt || news.publishedAt;
+    news.image = req.body.image || news.image; // Handle image field
     news.updatedAt = Date.now();
 
     const updatedNews = await news.save();

@@ -30,6 +30,7 @@ exports.createCompany = async (req, res) => {
     address: req.body.address,
     website: req.body.website,
     category: req.body.category,
+    image: req.body.image, // Include image in creation
   });
 
   try {
@@ -54,6 +55,7 @@ exports.updateCompany = async (req, res) => {
     company.address = req.body.address || company.address;
     company.website = req.body.website || company.website;
     company.category = req.body.category || company.category;
+    company.image = req.body.image || company.image; // Update image if provided
     company.updatedAt = Date.now();
 
     const updatedCompany = await company.save();
@@ -63,18 +65,6 @@ exports.updateCompany = async (req, res) => {
   }
 };
 
-// exports.deleteCompany = async (req, res) => {
-//   try {
-//     const company = await Company.findById(req.params.id);
-//     if (!company) {
-//       return res.status(404).json({ message: 'Company not found' });
-//     }
-//     await company.remove();
-//     res.json({ message: 'Company deleted' });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 exports.deleteCompany = async (req, res) => {
   try {
     const result = await Company.deleteOne({ _id: req.params.id });
